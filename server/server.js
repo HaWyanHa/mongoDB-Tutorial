@@ -23,7 +23,15 @@ app.post('/todos', (request, response) => {
     })
 })
 
-
+app.get('/todos', (request, response) => {
+    Todo.find().then((todos) => {
+        response.send({       //sends todos array back, so better to send back an object set to the todos array
+            todos
+        })
+    }, (e) => {
+        response.status(400).send(e)
+    })
+})
 
 
 
