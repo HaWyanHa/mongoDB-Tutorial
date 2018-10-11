@@ -62,7 +62,24 @@ app.get('/todos/:id', (request, response) => {
 
 })
 
+app.delete('/todos/:id', (request, response) => {
+    //Get the ID
+    let id = request.params.id
+    //Validate the id
+    if (!ObjectID.isValid(id)) {
+        return response.status(404).send('response is not valid so i sent back a 404')
+    }
+    //remove todo by ID
+    Todo.findByIdAndRemove(id).then((todoDoc) => {
+        if (!todoDoc) {
+            return response.status(404).send("there was no doc")
+        }
+        response.send(todoDoc)
+    }).catch((e) => {
+        response.status(400).send("the error was", e)
+    })
 
+})
 
 
 app.listen((port), () => {
