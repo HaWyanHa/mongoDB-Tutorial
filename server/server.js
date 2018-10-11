@@ -8,6 +8,8 @@ const {Todo} = require('./models/todo')
 const {User} = require('./models/user')
 
 const app = express();
+const port = process.env.PORT || 3000 //if process env port is there, then we are on heroku
+
 
 app.use(bodyParser.json())
 
@@ -63,6 +65,6 @@ app.get('/todos/:id', (request, response) => {
 
 
 
-app.listen((3000), () => {
-    console.log('started on port 3000')
+app.listen((port), () => {
+    console.log('started on port 3000', port)
 })
