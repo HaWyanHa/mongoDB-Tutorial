@@ -116,7 +116,26 @@ app.patch('/todos/:id', (req, res) => {
 
 })
 
+    //POST /users
+app.post('/users', (request, response) => {
+        
+    let body =_.pick(request.body, ['email', 'password'])
+    let user = new User(body)
+
+    
+    user.save().then(() => {
+        return user.generateAuthToken()
+    }).then((token) => {
+        response.header('x-auth', token).send(user)
+    }).catch((error) => {
+        response.status(400).send(error)
+        console.log('here')
+    })
+})
+    
 
 app.listen((port), () => {
     console.log('started on port 3000', port)
 })
+
+module.exports = {app}
